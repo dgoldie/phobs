@@ -22,14 +22,6 @@ class App {
     chan.onError(e => console.log("something went wrong", e))
     chan.onClose(e => console.log("channel closed", e))
 
-    // XXX I don't think I need this
-    // $input.off("keypress").on("keypress", e => {
-    //   if (e.keyCode == 13) {
-    //     chan.push("new:msg", {user: $username.val(), body: $input.val()})
-    //     $input.val("")
-    //   }
-    // })
-
     chan.on("top:update", top => {
       $top_container.html(this.topTemplate(top.top))
     })
