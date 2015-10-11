@@ -61,7 +61,7 @@ class App {
   }
 
   static header() {
-    return `<tr><th>PID</th><th>Name / Initial Function</th><th>Reductions</th><th>Memory</th><th>Current Function</th></tr>`
+    return `<tr><th>PID</th><th>Name / Initial Function</th><th>Reductions</th><th>Memory</th><th>Current Function</th><th>Links</th></tr>`
   }
 
   static procTemplate(proc){
@@ -70,8 +70,9 @@ class App {
     let reds     = this.sanitize(proc.reductions)
     let memory   = this.sanitize(proc.memory)
     let current  = this.sanitize(proc.current_function)
+    let links    = this.sanitize(proc.links)
 
-    return(`<tr><td>${pid}</td><td>${name}</td><td>${reds}</td><td>${memory}</td><td>${current}</td></tr>`)
+    return(`<tr><td>${pid}</td><td>${name}</td><td>${reds}</td><td>${memory}</td><td>${current}</td><td>${links}</td></tr>`)
   }
 }
 
