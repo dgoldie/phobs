@@ -13,6 +13,7 @@ defmodule Phobs.TopChannel.Top do
       memory:           memory(info),
       msgq:             info[:message_queue_len],
       current_function: format(info[:current_function]),
+      links:            format(info[:links])
     }
   end
 
@@ -23,6 +24,18 @@ defmodule Phobs.TopChannel.Top do
   defp format(pid) when is_pid(pid) do
     pid
     |> :erlang.pid_to_list
+    |> List.to_string
+  end
+
+  defp format(list) when is_list(list) do
+    list
+    |> Enum.map(fn(x) -> format(x) end)
+    |> List.to_string
+  end
+
+  defp format(port) when is_port(port) do
+    port
+    |> :erlang.port_to_list
     |> List.to_string
   end
 
