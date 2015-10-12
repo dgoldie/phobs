@@ -82,28 +82,31 @@ class App {
 
   static systemTemplate(sys) {
     let structure = ""
-    structure += `<div class="row">`
-    structure += `  <div class="col-md-6"><h4>System and Architecture</h4></div>`
-    structure += `  <div class="col-md-6"><h4>Memory Usage</h4></div>`
-    structure += `</div>`
 
     let sysarch = this.sysarchTemplate(sys)
     let mem = this.memTemplate(sys)
     structure += `<div class="row">`
-    structure += `  <div class="col-md-6">${sysarch}</div>`
-    structure += `  <div class="col-md-6">${mem}</div>`
+    structure += `  <div class="col-md-6">`
+    structure += `    <h4>System and Architecture</h4>`
+    structure += `    ${sysarch}`
     structure += `</div>`
-
-    structure += `<div class="row">`
-    structure += `  <div class="col-md-6"><h4>CPUS and Threads</h4></div>`
-    structure += `  <div class="col-md-6"><h4>Statistics</h4></div>`
+    structure += `  <div class="col-md-6">`
+    structure += `    <h4>Memory Usage</h4>`
+    structure += `    ${mem}`
+    structure += `  </div>`
     structure += `</div>`
 
     let cpu = this.cpuThreadTemplate(sys)
     let stats = this.statsTemplate(sys)
     structure += `<div class="row">`
-    structure += `  <div class="col-md-6">${cpu}</div>`
-    structure += `  <div class="col-md-6">${stats}</div>`
+    structure += `  <div class="col-md-6">`
+    structure += `    <h4>CPUs and Threads</h4>`
+    structure += `    ${cpu}`
+    structure += `</div>`
+    structure += `  <div class="col-md-6">`
+    structure += `    <h4>Statistics</h4>`
+    structure += `    ${stats}`
+    structure += `  </div>`
     structure += `</div>`
 
     return (structure);
