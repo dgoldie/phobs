@@ -140,7 +140,23 @@ class App {
   }
 
   static memTemplate(sys) {
-    return `Mem Sucks`;
+    sys.mem_total = this.formatBytes(sys.mem_total);
+    sys.mem_processes = this.formatBytes(sys.mem_processes);
+    sys.mem_atom = this.formatBytes(sys.mem_atom);
+    sys.mem_binary = this.formatBytes(sys.mem_binary);
+    sys.mem_code = this.formatBytes(sys.mem_code);
+    sys.mem_ets = this.formatBytes(sys.mem_ets);
+
+    return this.systemTable(sys,
+      {
+        "Total": "mem_total",
+        "Processes": "mem_processes",
+        "Atoms": "mem_atom",
+        "Binaries": "mem_binary",
+        "Code": "mem_code",
+        "Ets": "mem_ets",
+      }
+    )
   }
 
   static cpuThreadTemplate(sys) {
@@ -158,15 +174,17 @@ class App {
 
   static statsTemplate(sys) {
     sys.uptime_ms = this.msToTime(sys.uptime_ms)
+    sys.io_input = this.formatBytes(sys.io_input);
+    sys.io_output = this.formatBytes(sys.io_output);
 
     return this.systemTable(sys,
       {
         "Up time": "uptime_ms",
         "Max Processes": "processes_limit",
         "Processes": "processes",
-        // "Run Queue": "schedulers",
-        // "IO Input": "schedulers_online",
-        // "IO Output": "schedulers_available",
+        "Run Queue": "run_queue",
+        "IO Input": "io_input",
+        "IO Output": "io_output",
       }
     )
   }
@@ -184,6 +202,18 @@ class App {
       if (hours > 1) result = hours + " Hours";
 
       return result;
+  }
+
+  static formatBytes(bytes) {
+    var size;
+
+    if (bytes > 10 * 1024 * 1024)
+      return Math.floor(bytes / (1024 * 1024)) + " Mb"
+
+    if (bytes > 1024)
+      return Math.floor(bytes / 1024) + " Kb"
+
+    return bytes + " bytes"
   }
 }
 

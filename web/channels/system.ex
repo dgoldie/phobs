@@ -2,6 +2,10 @@ defmodule Phobs.SystemChannel.System do
   def info do
     :erlang.system_flag(:scheduler_wall_time, true)
 
+    {{_,input},{_,output}} = :erlang.statistics(:io)
+
+    mem_info = :erlang.memory()
+
     %{
       system_version:         :erlang.system_info(:otp_release) |> List.to_string,
       erts_version:           :erlang.system_info(:version) |> List.to_string,
@@ -19,16 +23,19 @@ defmodule Phobs.SystemChannel.System do
       schedulers_online:      :erlang.system_info(:schedulers_online),
       schedulers_available:   :erlang.system_info(:schedulers),  # No _available?
 
-      # Need to start :memsup?
-      # mem_total:              :erlang.get_memory_data(:Total)
-      # mem_process:            :erlang.get_procmem_high_watermark()
+      mem_total:              mem_info[:total],
+      mem_processes:          mem_info[:processes],
+      mem_atom:               mem_info[:atom],
+      mem_binary:             mem_info[:binary],
+      mem_code:               mem_info[:code],
+      mem_ets:                mem_info[:ets],
 
       uptime_ms:              uptime_ms,
       processes_limit:        :erlang.system_info(:process_limit),
       processes:              :erlang.system_info(:process_count),
-      # run_queue:              :erlang.system_info(:schedulers_online),
-      # io_input:               :erlang.system_info(:schedulers_online),
-      # io_output:              :erlang.system_info(:schedulers_online),
+      run_queue:              :erlang.statistics(:run_queue),
+      io_input:               input,
+      io_output:              output,
     }
   end
 
