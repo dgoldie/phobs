@@ -1,3 +1,13 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="#">System</a></li>
+  <li role="presentation"><a href="#">Load Charts</a></li>
+  <li role="presentation"><a href="#">Memory Allocators</a></li>
+  <li role="presentation"><a href="#">Applications</a></li>
+  <li role="presentation"><a href="#">Processes</a></li>
+  <li role="presentation"><a href="#">Table Viewer</a></li>
+  <li role="presentation"><a href="#">Trace Overview</a></li>
+</ul>
+
 <div id="system" class="container-fluid">
 
 </div>
