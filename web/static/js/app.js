@@ -106,14 +106,11 @@ class App {
     structure += `  <div class="col-md-6">${stats}</div>`
     structure += `</div>`
 
-    return (structure)
+    return (structure);
   }
 
   static systemTable(sys, names) {
-    var table;
-    var index;
-
-    table += `<table class="table table-striped">`
+    let table = `<table class="table table-striped">`
     for (var key in names) {
       if (names.hasOwnProperty(key)) {
         let syskey = names[key]
@@ -140,7 +137,7 @@ class App {
   }
 
   static memTemplate(sys) {
-    return `Mem Sucks`
+    return `Mem Sucks`;
   }
 
   static cpuThreadTemplate(sys) {
@@ -178,8 +175,10 @@ class App {
 
       var result;
       result = seconds + " Seconds ";
-      if (minutes > 0) result = minutes + " Minutes";
-      if (hours > 0) result = hours + " Hours";
+      if (minutes == 1) result = "1 Minute";
+      if (minutes > 1) result = minutes + " Minutes";
+      if (hours == 1) result = "1 Hour"
+      if (hours > 1) result = hours + " Hours";
 
       return result;
   }
