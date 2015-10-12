@@ -11,7 +11,7 @@ class App {
 
     // XXX What is user?  Do I need it?
     socket.connect({user_id: "123"})
-    var $top_container  = $("#top")
+    var $top_container  = $("#processes")
     var $system_container  = $("#system")
 
 

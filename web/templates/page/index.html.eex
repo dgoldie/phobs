@@ -1,15 +1,23 @@
-<ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="#">System</a></li>
-  <li role="presentation"><a href="#">Load Charts</a></li>
-  <li role="presentation"><a href="#">Memory Allocators</a></li>
-  <li role="presentation"><a href="#">Applications</a></li>
-  <li role="presentation"><a href="#">Processes</a></li>
-  <li role="presentation"><a href="#">Table Viewer</a></li>
-  <li role="presentation"><a href="#">Trace Overview</a></li>
-</ul>
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist" data-tabs="tabs">
+    <li role="presentation" class="active"><a href="#system" role="tab" data-toggle="tab">System</a></li>
+    <li role="presentation"><a href="#load_charts" role="tab" data-toggle="tab">Load Charts</a></li>
+    <li role="presentation"><a href="#memory_allocators" role="tab" data-toggle="tab">Memory Allocators</a></li>
+    <li role="presentation"><a href="#applications" role="tab" data-toggle="tab">Applications</a></li>
+    <li role="presentation"><a href="#processes" role="tab" data-toggle="tab">Processes</a></li>
+    <li role="presentation"><a href="#table_viewer" role="tab" data-toggle="tab">Table Viewer</a></li>
+    <li role="presentation"><a href="#trace_overview" role="tab" data-toggle="tab">Trace Overview</a></li>
+  </ul>
 
-<div id="system" class="container-fluid">
-
-</div>
-<div id="top" class="container">
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane container-fluid active" id="system"></div>
+    <div role="tabpanel" class="tab-pane container-fluid" id="load_charts">Unimplemented</div>
+    <div role="tabpanel" class="tab-pane container-fluid" id="memory_allocators">Unimplemented</div>
+    <div role="tabpanel" class="tab-pane container-fluid" id="applications">Unimplemented</div>
+    <div role="tabpanel" class="tab-pane container-fluid" id="processes"></div>
+    <div role="tabpanel" class="tab-pane container-fluid" id="table_viewer">Unimplemented</div>
+    <div role="tabpanel" class="tab-pane container-fluid" id="trace_overview">Unimplemented</div>
+  </div>
 </div>
