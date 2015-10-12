@@ -1,4 +1,5 @@
 import {Socket, LongPoller} from "phoenix"
+import {System} from "web/static/js/system"
 
 class App {
 
@@ -36,7 +37,7 @@ class App {
     chan.onClose(e => console.log("channel closed", e))
 
     chan.on("system:update", system => {
-      $system_container.html(this.systemTemplate(system))
+      $system_container.html(System.systemTemplate(system))
     })
   }
 
@@ -78,142 +79,6 @@ class App {
     let links    = this.sanitize(proc.links)
 
     return(`<tr><td>${pid}</td><td>${name}</td><td>${reds}</td><td>${memory}</td><td>${current}</td><td>${links}</td></tr>`)
-  }
-
-  static systemTemplate(sys) {
-    let structure = ""
-
-    let sysarch = this.sysarchTemplate(sys)
-    let mem = this.memTemplate(sys)
-    structure += `<div class="row">`
-    structure += `  <div class="col-md-6">`
-    structure += `    <h4>System and Architecture</h4>`
-    structure += `    ${sysarch}`
-    structure += `</div>`
-    structure += `  <div class="col-md-6">`
-    structure += `    <h4>Memory Usage</h4>`
-    structure += `    ${mem}`
-    structure += `  </div>`
-    structure += `</div>`
-
-    let cpu = this.cpuThreadTemplate(sys)
-    let stats = this.statsTemplate(sys)
-    structure += `<div class="row">`
-    structure += `  <div class="col-md-6">`
-    structure += `    <h4>CPUs and Threads</h4>`
-    structure += `    ${cpu}`
-    structure += `</div>`
-    structure += `  <div class="col-md-6">`
-    structure += `    <h4>Statistics</h4>`
-    structure += `    ${stats}`
-    structure += `  </div>`
-    structure += `</div>`
-
-    return (structure);
-  }
-
-  static systemTable(sys, names) {
-    let table = `<table class="table table-striped">`
-    for (var key in names) {
-      if (names.hasOwnProperty(key)) {
-        let syskey = names[key]
-        table +=`    <tr> <td>${key}</td> <td>${this.sanitize(sys[syskey])}</td> </tr>`
-      }
-    }
-    table += `</table>`
-
-    return table
-  }
-
-  static sysarchTemplate(sys) {
-    return this.systemTable(sys,
-      {
-        "System Version": "system_version",
-        "Erts Version": "erts_version",
-        "Compiled For": "compiled_for",
-        "Emulator Word Size": "emulator_wordsize",
-        "Process Word Size": "smp_support",
-        "Thread Support": "thread_support",
-        "Async thread pool size": "async_thread_pool_size"
-      }
-    )
-  }
-
-  static memTemplate(sys) {
-    sys.mem_total = this.formatBytes(sys.mem_total);
-    sys.mem_processes = this.formatBytes(sys.mem_processes);
-    sys.mem_atom = this.formatBytes(sys.mem_atom);
-    sys.mem_binary = this.formatBytes(sys.mem_binary);
-    sys.mem_code = this.formatBytes(sys.mem_code);
-    sys.mem_ets = this.formatBytes(sys.mem_ets);
-
-    return this.systemTable(sys,
-      {
-        "Total": "mem_total",
-        "Processes": "mem_processes",
-        "Atoms": "mem_atom",
-        "Binaries": "mem_binary",
-        "Code": "mem_code",
-        "Ets": "mem_ets",
-      }
-    )
-  }
-
-  static cpuThreadTemplate(sys) {
-    return this.systemTable(sys,
-      {
-        "Logical CPUs": "logical_cpus",
-        "Online Logical CPUs": "logical_cpus_online",
-        "Available Logical CPUs": "logical_cpus_available",
-        "Schedulers": "schedulers",
-        "Online Schedulers": "schedulers_online",
-        "Available Schedulers": "schedulers_available",
-      }
-    )
-  }
-
-  static statsTemplate(sys) {
-    sys.uptime_ms = this.msToTime(sys.uptime_ms)
-    sys.io_input = this.formatBytes(sys.io_input);
-    sys.io_output = this.formatBytes(sys.io_output);
-
-    return this.systemTable(sys,
-      {
-        "Up time": "uptime_ms",
-        "Max Processes": "processes_limit",
-        "Processes": "processes",
-        "Run Queue": "run_queue",
-        "IO Input": "io_input",
-        "IO Output": "io_output",
-      }
-    )
-  }
-
-  static msToTime(duration) {
-      var seconds = parseInt((duration/1000)%60)
-          , minutes = parseInt((duration/(1000*60))%60)
-          , hours = parseInt((duration/(1000*60*60))%24);
-
-      var result;
-      result = seconds + " Seconds ";
-      if (minutes == 1) result = "1 Minute";
-      if (minutes > 1) result = minutes + " Minutes";
-      if (hours == 1) result = "1 Hour"
-      if (hours > 1) result = hours + " Hours";
-
-      return result;
-  }
-
-  static formatBytes(bytes) {
-    var size;
-
-    if (bytes > 10 * 1024 * 1024)
-      return Math.floor(bytes / (1024 * 1024)) + " Mb"
-
-    if (bytes > 1024)
-      return Math.floor(bytes / 1024) + " Kb"
-
-    return bytes + " bytes"
   }
 }
 
