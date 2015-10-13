@@ -11,13 +11,14 @@ class App {
 
     // XXX What is user?  Do I need it?
     socket.connect({user_id: "123"})
-
-
     socket.onOpen( ev => console.log("OPEN", ev) )
     socket.onError( ev => console.log("ERROR", ev) )
     socket.onClose( e => console.log("CLOSE", e))
 
-    Processes.join(socket)
+    System.init(socket)
+    Processes.init(socket)
+
+    // Initial tab
     System.join(socket)
   }
 }

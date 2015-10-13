@@ -1,6 +1,13 @@
 import {Utils} from "web/static/js/utils"
 
 export class System {
+  static init(socket) {
+    $("a[href='#system']").on('shown.bs.tab', function(e) {
+      console.log('showing system');
+      System.join(socket)
+    });
+  }
+
   static join(socket) {
     var chan = socket.channel("phobs:system", {})
     chan.join().receive("ignore", () => console.log("auth error"))
