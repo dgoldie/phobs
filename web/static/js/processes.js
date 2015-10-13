@@ -7,7 +7,6 @@ export class Processes {
     });
   }
 
-
   static join(socket) {
     var chan = socket.channel("phobs:top", {})
     chan.join().receive("ignore", () => console.log("auth error"))
