@@ -3,7 +3,6 @@ import {Utils} from "web/static/js/utils"
 export class Processes {
   static init(socket) {
     $("a[href='#processes']").on('show.bs.tab', function(e) {
-      console.log('showning processes');
       Processes.join(socket)
     });
   }

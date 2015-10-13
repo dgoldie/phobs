@@ -3,7 +3,6 @@ import {Utils} from "web/static/js/utils"
 export class System {
   static init(socket) {
     $("a[href='#system']").on('show.bs.tab', function(e) {
-      console.log('showing system');
       System.join(socket)
     });
   }
