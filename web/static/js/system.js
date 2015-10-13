@@ -2,7 +2,7 @@ import {Utils} from "web/static/js/utils"
 
 export class System {
   static init(socket) {
-    $("a[href='#system']").on('shown.bs.tab', function(e) {
+    $("a[href='#system']").on('show.bs.tab', function(e) {
       console.log('showing system');
       System.join(socket)
     });
@@ -20,6 +20,10 @@ export class System {
     chan.on("system:update", system => {
       $system_container.html(System.systemTemplate(system))
     })
+
+    $("a[href='#system']").on('hidden.bs.tab', function(e) {
+      chan.leave()
+    });
   }
 
   static systemTemplate(sys) {

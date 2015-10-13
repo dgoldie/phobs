@@ -21,6 +21,10 @@ export class Processes {
     chan.on("top:update", top => {
       $top_container.html(Processes.topTemplate(top.top))
     })
+
+    $("a[href='#processes']").on('hidden.bs.tab', function(e) {
+      chan.leave()
+    });
   }
 
   static topTemplate(top) {
