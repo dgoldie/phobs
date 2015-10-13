@@ -1,6 +1,20 @@
 import {Utils} from "web/static/js/utils"
 
 export class System {
+  static join(socket) {
+    var chan = socket.channel("phobs:system", {})
+    chan.join().receive("ignore", () => console.log("auth error"))
+               .receive("ok", () => console.log("join ok"))
+               .after(10000, () => console.log("Connection interruption"))
+    chan.onError(e => console.log("something went wrong", e))
+    chan.onClose(e => console.log("channel closed", e))
+
+    var $system_container  = $("#system")
+    chan.on("system:update", system => {
+      $system_container.html(System.systemTemplate(system))
+    })
+  }
+
   static systemTemplate(sys) {
     let structure = ""
 

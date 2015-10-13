@@ -1,6 +1,20 @@
 import {Utils} from "web/static/js/utils"
 
 export class Processes {
+  static join(socket) {
+    var chan = socket.channel("phobs:top", {})
+    chan.join().receive("ignore", () => console.log("auth error"))
+               .receive("ok", () => console.log("join ok"))
+               .after(10000, () => console.log("Connection interruption"))
+    chan.onError(e => console.log("something went wrong", e))
+    chan.onClose(e => console.log("channel closed", e))
+
+    var $top_container  = $("#processes")
+    chan.on("top:update", top => {
+      $top_container.html(Processes.topTemplate(top.top))
+    })
+  }
+
   static topTemplate(top) {
     let outer = this.topOuter(top)
     return(`<p><table class="table table-striped">${outer}</table>`)
