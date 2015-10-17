@@ -1,7 +1,8 @@
 defmodule Phobs.UserSocket do
   use Phoenix.Socket
 
-  channel "phobs:*", Phobs.TopChannel
+  channel "phobs:top",   Phobs.TopChannel
+  channel "phobs:graph", Phobs.GraphChannel
 
   transport :websocket, Phoenix.Transports.WebSocket
   # transport :longpoll, Phoenix.Transports.LongPoll

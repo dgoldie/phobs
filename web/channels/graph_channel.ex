@@ -1,18 +1,8 @@
-defmodule Phobs.TopChannel do
+defmodule Phobs.GraphChannel do
   use Phoenix.Channel
   require Logger
 
-  alias Phobs.TopChannel.Top
-
-  def join("phobs:top", message, socket) do
-    Process.flag(:trap_exit, true)
-
-    # Need to do this only once, not per join
-    # Also need to stop the timer when all connections terminate
-    :timer.send_interval(1000, :update)
-
-    {:ok, socket}
-  end
+  alias Phobs.GraphChannel.Graph
 
   def join("phobs:graph", message, socket) do
     Process.flag(:trap_exit, true)
@@ -25,7 +15,7 @@ defmodule Phobs.TopChannel do
   end
 
   def handle_info(:update, socket) do
-    broadcast! socket, "top:update", %{top: Top.top}
+    broadcast! socket, "graph:update", %{graph: Graph.graph}
     {:noreply, socket}
   end
 
