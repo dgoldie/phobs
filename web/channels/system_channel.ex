@@ -1,11 +1,11 @@
-defmodule Phobs.TopChannel do
+defmodule Phobs.SystemChannel do
   use Phoenix.Channel
   require Logger
 
-  alias Phobs.TopChannel.Top
+  alias Phobs.SystemChannel.System
   alias Phoenix.Socket
 
-  def join("phobs:top", _message, socket) do
+  def join("phobs:system", _message, socket) do
     Process.flag(:trap_exit, true)
     socket = start_timer(socket)
 
@@ -13,7 +13,7 @@ defmodule Phobs.TopChannel do
   end
 
   def handle_info(:update, socket) do
-    broadcast! socket, "top:update", %{top: Top.top}
+    broadcast! socket, "system:update", System.info
     {:noreply, socket}
   end
 
@@ -24,24 +24,23 @@ defmodule Phobs.TopChannel do
   end
 
   defp start_timer(socket) do
-    count = socket.assigns[:phobs_top_timer_count]
+    count = socket.assigns[:phobs_system_timer_count]
     if (count == nil or count == 0) do
       {:ok, tref} = :timer.send_interval(1000, :update)
-      socket = Socket.assign(socket, :phobs_top_timer_ref, tref)
-      socket = Socket.assign(socket, :phobs_top_timer_count, 1)
+      socket = Socket.assign(socket, :phobs_system_timer_ref, tref)
+      socket = Socket.assign(socket, :phobs_system_timer_count, 1)
     else
-      socket = Socket.assign(socket, :phobs_top_timer_count, count + 1)
+      socket = Socket.assign(socket, :phobs_system_timer_count, count + 1)
     end
     socket
   end
 
   defp cancel_timer(socket) do
-    count = socket.assigns[:phobs_top_timer_count]
+    count = socket.assigns[:phobs_system_timer_count]
     if (count == 1) do
-      tref = socket.assigns[:phobs_top_timer_ref]
+      tref = socket.assigns[:phobs_system_timer_ref]
       :timer.cancel(tref)
     end
-    Socket.assign(socket, :phobs_top_timer_count, count - 1)
+    Socket.assign(socket, :phobs_system_timer_count, count - 1)
   end
-
 end
